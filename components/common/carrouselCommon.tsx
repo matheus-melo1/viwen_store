@@ -40,7 +40,7 @@ export default function Carrousel({
   };
   return (
     <Slider
-      className={`mb-5 flex h-full w-full items-center gap-2 p-1 ${className}`}
+      className={`${className} flex h-full w-full items-center p-1`}
       arrows={arrows === undefined ? false : arrows}
       {...settings}
     >

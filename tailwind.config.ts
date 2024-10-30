@@ -16,7 +16,8 @@ const config: Config = {
         bg_secondary: '#ececec',
         primary: '#009393',
         primary_light: '#2edddd60',
-        secondary_text: '#5C5C5C'
+        secondary_text: '#5C5C5C',
+        line: '#ddd'
       },
     },
     fontFamily: {
