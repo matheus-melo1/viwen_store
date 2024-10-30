@@ -11,7 +11,7 @@ import {
 
 export default function Navbar() {
   return (
-    <nav className="flex h-full w-[330px] flex-col justify-between gap-2 bg-white p-3 max-lg:sticky max-lg:top-0 max-lg:h-24 max-lg:w-full max-lg:flex-row">
+    <nav className="flex h-full w-[330px] flex-col justify-between gap-2 bg-white p-3 font-sans max-lg:sticky max-lg:top-0 max-lg:h-24 max-lg:w-full max-lg:flex-row">
       <div className="flex flex-col max-lg:flex-row">
         <div className="mb-4 flex items-center gap-4 p-3">
           <Image width={64} height={64} src="/images/Logo_loja.png" alt="" />

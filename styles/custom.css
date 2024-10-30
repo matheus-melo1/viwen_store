@@ -1,0 +1,19 @@
+.btn-primary {
+  @apply flex cursor-pointer items-center justify-center rounded-xl bg-primary px-3 py-2 text-white transition-all;
+}
+
+.btn-outlined {
+  @apply flex cursor-pointer items-center justify-center rounded-xl border border-primary px-3 py-2 text-primary;
+}
+
+.btn-outlined:hover {
+  @apply btn-primary;
+}
+
+.input-primary {
+  @apply rounded-lg bg-white p-1 text-base text-black outline-none transition-all;
+}
+
+.input-primary:hover {
+  @apply border-primary;
+}
