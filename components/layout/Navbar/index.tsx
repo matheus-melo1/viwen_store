@@ -10,6 +10,15 @@ import {
 } from "lucide-react";
 
 export default function Navbar() {
+
+  const routes = {
+    home: "/",
+    explorer: "/explorer",
+    favorite: "/favorite",
+    cart: "/cart",
+    profile: "/profile",
+  };
+
   return (
     <nav className="flex h-full w-[330px] flex-col justify-between gap-2 bg-white p-3 font-sans max-lg:sticky max-lg:top-0 max-lg:h-24 max-lg:w-full max-lg:flex-row">
       <div className="flex flex-col max-lg:flex-row">
@@ -18,19 +27,32 @@ export default function Navbar() {
           <h1 className="text-2xl font-bold text-black">Viwen Store</h1>
         </div>
         <div className="flex flex-col gap-1 max-lg:hidden">
-          <NavOption icon={<House className="h-7 w-7" />} href="/">
+          <NavOption icon={<House className="h-7 w-7" />} href={routes.home}>
             Início
           </NavOption>
-          <NavOption icon={<Compass className="h-7 w-7" />} href="/">
+          <NavOption
+            icon={<Compass className="h-7 w-7" />}
+            href={routes.explorer}
+          >
             Explorar
           </NavOption>
-          <NavOption icon={<Heart className="h-7 w-7" />} href="/">
+          <NavOption
+            icon={<Heart className="h-7 w-7" />}
+            href={routes.favorite}
+          >
             Favoritos
           </NavOption>
-          <NavOption icon={<ShoppingCart className="h-7 w-7" />} href="/">
+          <NavOption
+            cartValid
+            icon={<ShoppingCart className="h-7 w-7" />}
+            href={routes.cart}
+          >
             Carrinho
           </NavOption>
-          <NavOption icon={<CircleUserIcon className="h-7 w-7" />} href="/">
+          <NavOption
+            icon={<CircleUserIcon className="h-7 w-7" />}
+            href={routes.profile}
+          >
             Seu Perfil
           </NavOption>
         </div>
