@@ -1,12 +1,18 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
 import Increment from "@/components/common/Increment";
 import Text from "@/components/common/text/text";
 import Title from "@/components/common/text/title";
 import { FaPix } from "react-icons/fa6";
 import ClothingSlider from "./ClothingSlider";
 import { MdPayment } from "react-icons/md";
+import { useAppContext } from "@/hooks/useAppContext";
+import { useEffect } from "react";
+
+interface ClothingHeaderProps {
+  id: string;
+  onClickPayForm: () => void;
+}
 
 const gallery = [
   "https://nakyk.cdn.magazord.com.br/img/2024/05/produto/8178/01-blusa-eclipse-01.jpg",
@@ -15,31 +21,45 @@ const gallery = [
   "https://nakyk.cdn.magazord.com.br/img/2024/05/produto/8181/01-blusa-eclipse-04.jpg",
 ];
 
-export default function ClothingHeader() {
+export default function ClothingHeader({
+  onClickPayForm,
+  id,
+}: ClothingHeaderProps) {
+  const { setId, product } = useAppContext();
+
+  useEffect(() => {
+    setId(id);
+  });
+
   return (
-    <section className="flex h-full w-full items-start justify-evenly gap-2 rounded bg-main_bg px-4 py-8">
-      <ClothingSlider gallery={gallery} />
-      <div className="flex w-[550px] flex-col gap-5 rounded-lg bg-white p-4">
+    <section className="mx-auto flex h-full w-full items-start justify-center gap-2 rounded bg-main_bg px-4 py-8 max-2xl:max-w-full max-lg:w-full max-lg:flex-col max-lg:items-center">
+      <div className="relative flex items-center justify-between gap-10 rounded bg-bg_secondary p-3 max-lg:w-full max-lg:gap-5">
+        <ClothingSlider gallery={gallery} />
+      </div>
+      <div className="flex w-[550px] flex-col gap-5 rounded-lg bg-white p-4 max-lg:w-full">
         <div className="flex w-full flex-col gap-4">
           <Text className="flex w-20 justify-center rounded-full bg-black px-2 py-[2px] text-sm text-white">
-            Camiseta
+            {product?.marca}
           </Text>
           <Title size="2" className="font-medium text-zinc-800">
-            Sufgang Basic Azul 5.4
+            {product?.nome}
           </Title>
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <Title size="2" className="font-bold text-primary">
-                R$ 399,90
+                R$ {product?.valor}
               </Title>
               <Text className="text-secondary_text">no cartão de credito</Text>
             </div>
             <Text className="flex items-center gap-2 text-secondary_text">
               <FaPix className="h-5 w-5" />
-              <strong>R$349,90</strong> no Pix
+              <strong>R${Number(product?.valor) - 10}</strong> no Pix
             </Text>
           </div>
-          <button className="btn-outlined gap-2 border border-bg_secondary text-secondary_text hover:bg-primary_light hover:text-secondary_text">
+          <button
+            onClick={onClickPayForm}
+            className="btn-outlined gap-2 border border-bg_secondary text-secondary_text hover:bg-primary_light hover:text-secondary_text"
+          >
             <MdPayment className="h-5 w-5" /> Formas de pagamento
           </button>
         </div>

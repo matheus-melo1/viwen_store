@@ -1,23 +1,60 @@
+"use client";
+
 import Link from "next/link";
-import { ReactNode } from "react";
+import React, { ReactNode } from "react";
 import { Inter } from "next/font/google";
+import Text from "@/components/common/text/text";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 interface NavOptionProps {
   href: string;
-  children: string;
+  children: React.ReactNode;
   icon?: ReactNode;
+  className?: string;
+  cartValid?: boolean;
 }
 
-export default function NavOption({ href, children, icon }: NavOptionProps) {
+export default function NavOption({
+  href,
+  children,
+  icon,
+  className,
+  cartValid,
+}: NavOptionProps) {
+  const pathname = usePathname();
+
   return (
     <Link
-      className={`${inter.className} ease flex w-full items-center justify-start gap-5 rounded-lg p-4 text-lg font-semibold text-zinc-600 duration-150 hover:bg-zinc-100`}
+      className={clsx(
+        className,
+        href === pathname && "bg-primary_light/20",
+        `${inter.className} ease flex w-full items-center justify-start gap-5 rounded-lg p-4 text-lg font-semibold text-zinc-600 duration-150 hover:bg-zinc-100`,
+      )}
       href={href}
     >
-      <span>{icon}</span>
-      {children}
+      {cartValid ? (
+        <>
+          <div className="flex w-full items-center gap-5">
+            <span>{icon}</span>
+            {children}
+          </div>
+          <div className="flex h-6 w-7 items-center justify-center rounded-full bg-primary text-white">
+            <Text className="text-sm">0</Text>
+          </div>
+        </>
+      ) : (
+        <>
+          <span className={clsx(href === pathname && "text-primary")}>
+            {icon}
+          </span>
+          <span className={clsx(href === pathname && "text-primary")}>
+            {children}
+          </span>
+        </>
+      )}
     </Link>
   );
 }

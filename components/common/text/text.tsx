@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 interface TextProps {
   children: React.ReactNode;
   className?: string;
@@ -5,6 +7,6 @@ interface TextProps {
 
 export default function Text({ children, className }: TextProps) {
   return (
-    <p className={`font-sans ${className}`}>{children}</p>
+    <p className={clsx(className, "font-sans")}>{children}</p>
   );
 }
