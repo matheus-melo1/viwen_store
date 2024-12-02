@@ -7,6 +7,7 @@ export interface IProductModel {
   marca: string;
   qtd: number;
   estoque?: number;
+  image: string;
 }
 
 export interface IProductResponseId {

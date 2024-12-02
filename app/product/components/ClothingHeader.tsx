@@ -7,11 +7,13 @@ import { FaPix } from "react-icons/fa6";
 import ClothingSlider from "./ClothingSlider";
 import { MdPayment } from "react-icons/md";
 import { useAppContext } from "@/hooks/useAppContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import formatPrice from "@/utils/formatPrice";
+import { IProductModel } from "@/models/products/IProductModel";
 
 interface ClothingHeaderProps {
   id: string;
-  onClickPayForm: () => void;
+  onClickAddCart: (item: IProductModel, quantity: number) => void;
 }
 
 const gallery = [
@@ -22,10 +24,13 @@ const gallery = [
 ];
 
 export default function ClothingHeader({
-  onClickPayForm,
+  onClickAddCart,
   id,
 }: ClothingHeaderProps) {
   const { setId, product } = useAppContext();
+  const [qtd, setQtd] = useState<number>(1);
+
+  const priceFormatted = formatPrice(product?.valor ?? "0");
 
   useEffect(() => {
     setId(id);
@@ -38,7 +43,7 @@ export default function ClothingHeader({
       </div>
       <div className="flex w-[550px] flex-col gap-5 rounded-lg bg-white p-4 max-lg:w-full">
         <div className="flex w-full flex-col gap-4">
-          <Text className="flex w-20 justify-center rounded-full bg-black px-2 py-[2px] text-sm text-white">
+          <Text className="flex w-44 justify-center rounded-full bg-black px-2 py-[2px] text-sm text-white">
             {product?.marca}
           </Text>
           <Title size="2" className="font-medium text-zinc-800">
@@ -47,24 +52,30 @@ export default function ClothingHeader({
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <Title size="2" className="font-bold text-primary">
-                R$ {product?.valor}
+                {priceFormatted}
               </Title>
               <Text className="text-secondary_text">no cartão de credito</Text>
             </div>
             <Text className="flex items-center gap-2 text-secondary_text">
               <FaPix className="h-5 w-5" />
-              <strong>R${Number(product?.valor) - 10}</strong> no Pix
+              <strong>{formatPrice(String(product?.valor))}</strong> no Pix
             </Text>
           </div>
-          <button
-            onClick={onClickPayForm}
-            className="btn-outlined gap-2 border border-bg_secondary text-secondary_text hover:bg-primary_light hover:text-secondary_text"
-          >
+          <button className="btn-outlined gap-2 border border-bg_secondary text-secondary_text hover:bg-primary_light hover:text-secondary_text">
             <MdPayment className="h-5 w-5" /> Formas de pagamento
           </button>
         </div>
-        <Increment className="mt-1" value={0} />
-        <button className="btn-primary flex items-center gap-2 rounded p-5 text-sm uppercase">
+        <Increment
+          size="normal"
+          className="mt-1"
+          value={qtd}
+          onAdd={() => setQtd(qtd + 1)}
+          onDec={() => setQtd(qtd === 1 ? 1 : qtd - 1)}
+        />
+        <button
+          onClick={() => onClickAddCart(product as IProductModel, qtd)}
+          className="btn-primary flex items-center gap-2 rounded p-5 text-sm uppercase"
+        >
           {/* <FaCartPlus className="h-6 w-6" /> */}
           Adicionar ao Carrinho
         </button>

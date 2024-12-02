@@ -1,5 +1,6 @@
 "use client";
 
+import AuthProvider from "./AuthProvider";
 import GlobalProvider from "./GlobalProvider";
 
 interface ProvidersProps {
@@ -7,5 +8,9 @@ interface ProvidersProps {
 }
 
 export default function Providers({ children }: ProvidersProps) {
-  return <GlobalProvider>{children}</GlobalProvider>;
+  return (
+    <GlobalProvider>
+      <AuthProvider>{children}</AuthProvider>
+    </GlobalProvider>
+  );
 }

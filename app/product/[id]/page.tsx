@@ -9,7 +9,9 @@ import Text from "@/components/common/text/text";
 import { FaPix } from "react-icons/fa6";
 import { Barcode, CreditCard } from "lucide-react";
 import ProductProvider from "@/context/providers/ProductProvider";
-
+import useGlobalContext from "@/hooks/useGlobalContext";
+import { IProductModel } from "@/models/products/IProductModel";
+import toast from "react-hot-toast";
 interface ParamsProps {
   params: {
     id: string;
@@ -18,7 +20,22 @@ interface ParamsProps {
 
 export default function Clothing({ params }: ParamsProps) {
   const [openDialog, setOpenDialog] = useState(false);
-  const handleOpenDialogPayForms = () => setOpenDialog((prev) => !prev);
+
+  const { cart, setCart } = useGlobalContext();
+  
+  const handleAddCart = (item: IProductModel, quantity: number) => {
+    const prodContain = cart?.filter(
+      (prod) => prod.id === item.id,
+    ) as IProductModel[];
+    if (prodContain.length > 0) {
+      toast.error("Item já adicionado ao carrinho");
+      return;
+    }
+
+    item.qtd = quantity;
+    setCart((prevCart) => [...prevCart, item]);
+    toast.success("Item adicionado ao carrinho");
+  };
 
   return (
     <ProductProvider>
@@ -62,7 +79,7 @@ export default function Clothing({ params }: ParamsProps) {
         </DefaultDialog>
         <ClothingHeader
           id={params.id}
-          onClickPayForm={handleOpenDialogPayForms}
+          onClickAddCart={handleAddCart}
         />
         <ClothingFooter />
       </main>

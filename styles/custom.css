@@ -1,19 +1,30 @@
 .btn-primary {
-  @apply flex cursor-pointer items-center justify-center rounded-xl bg-primary px-3 py-2 text-white transition-all;
+  @apply flex cursor-pointer items-center justify-center rounded-xl bg-primary px-4 py-2 text-white transition-all;
 }
 
 .btn-outlined {
-  @apply flex cursor-pointer items-center justify-center rounded-xl border border-primary px-3 py-2 text-primary;
+  @apply flex cursor-pointer items-center justify-center rounded-xl border border-primary px-4 py-2 text-primary transition-all duration-500;
 }
 
-.btn-outlined:hover {
-  @apply btn-primary;
+.btn-text {
+  @apply flex cursor-pointer items-center justify-center rounded-xl px-4 py-2 text-primary transition-all duration-500;
+}
+
+.btn-outlined:hover,
+.btn-text:hover {
+  @apply bg-primary/10;
+}
+
+.btn-outlined:active,
+.btn-text:active {
+  @apply bg-primary/30 text-zinc-200;
 }
 
 .input-primary {
   @apply rounded-lg bg-white p-1 text-base text-black outline-none transition-all;
 }
 
-.input-primary:hover {
+.input-primary:hover,
+.input-primary:focus {
   @apply border-primary;
 }

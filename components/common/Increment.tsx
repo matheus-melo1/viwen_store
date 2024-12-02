@@ -6,12 +6,14 @@ interface IncrementProps {
   onDec?: () => void;
   value: number;
   className?: string;
+  size: "small" | "normal";
 }
 
 export default function Increment({
   onAdd,
   onDec,
   value,
+  size,
   className,
 }: IncrementProps) {
   return (
@@ -23,14 +25,22 @@ export default function Increment({
     >
       <button
         onClick={onDec}
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-2xl text-secondary_text"
+        className={clsx(
+          size === "small" && "h-7 w-7",
+          size === "normal" && "h-9 w-9",
+          "flex items-center justify-center rounded-full bg-white text-2xl text-secondary_text",
+        )}
       >
         -
       </button>
       <Text className="text-base text-black">{value}</Text>
       <button
         onClick={onAdd}
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-2xl text-secondary_text"
+        className={clsx(
+          size === "small" && "h-7 w-7",
+          size === "normal" && "h-9 w-9",
+          "flex items-center justify-center rounded-full bg-white text-2xl text-secondary_text",
+        )}
       >
         +
       </button>

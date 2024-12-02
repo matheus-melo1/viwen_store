@@ -21,7 +21,7 @@ export default function Title({ children, className, size }: TitleProps) {
       className={clsx(
         sizesClasses[size],
         className,
-        "font-sans max-sm:text-lg",
+        "font-sans max-sm:text-lg text-zinc-800",
       )}
     >
       {children}

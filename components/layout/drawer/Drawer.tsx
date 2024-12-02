@@ -3,18 +3,20 @@ import clsx from "clsx";
 interface DialogProps {
   children?: React.ReactNode;
   className?: string;
-  size: "sm" | "md" | "lg" | "xl";
+  size: "xs" | "sm" | "md" | "lg" | "xl";
   showDrawer: boolean;
+  onClose?: () => void;
 }
 
 export default function Drawer({
   children,
   className,
+  onClose,
   size,
   showDrawer,
 }: DialogProps) {
-
   const sizeClasses = {
+    xs: "w-[320px]",
     sm: "w-[640px]",
     md: "w-[1024px]",
     lg: "w-[1280px]",
@@ -26,17 +28,24 @@ export default function Drawer({
       <main
         className={clsx(
           className,
-          showDrawer ? "flex" : "hidden",
           sizeClasses[size],
-          "h-screen absolute left-0 top-0 z-[99999] flex-col overflow-hidden rounded-lg bg-main_bg",
+          "ease-out absolute left-0 top-0 z-[99999] h-screen flex flex-col justify-between overflow-hidden rounded-lg bg-main_bg transition-all duration-500",
+          {
+            "translate-x-0": showDrawer,
+            "-translate-x-[900px]": !showDrawer,
+          },
         )}
       >
         {children}
       </main>
       <div
+        onClick={onClose}
         className={clsx(
-          showDrawer ? "block" : "hidden",
-          "absolute left-0 top-0 z-50 h-full w-full bg-black/30",
+          {
+            block: showDrawer,
+            hidden: !showDrawer,
+          },
+          "ease absolute left-0 top-0 z-50 h-full w-full bg-black/30 transition-all duration-200",
         )}
       ></div>
     </>
