@@ -82,7 +82,7 @@ export default function InputText({
           {...useRegister}
           className={clsx(
             useError && "border-red-600 focus:border-red-600 hover:border-red-600",
-            icon && "pl-9",
+            icon && "pl-10",
             variant === "outlined" && "border border-bg_secondary",
             variant === "filled" && "bg-bg_secondary",
             "input-primary rounded-lg p-2 text-secondary_text outline-none",

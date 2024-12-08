@@ -23,6 +23,7 @@ import formatPrice from "@/utils/formatPrice";
 import { motion } from "motion/react";
 import InputText from "../common/InputText";
 import Title from "../common/text/title";
+import Link from "next/link";
 
 export default function Home() {
   const { getAllProducts, favorites, setFavorites, cart, setCart } =
@@ -40,7 +41,12 @@ export default function Home() {
 
   const handleClickFavorite = (item: IProductModel) => {
     const prodContain = favorites.filter((prod) => prod.id === item.id);
-    if (prodContain.length > 0) return;
+    if (prodContain.length > 0) {
+      setFavorites((prevItems) =>
+        prevItems.filter((item) => item.id !== prodContain[0].id),
+      );
+      return;
+    }
     setFavorites((prev) => [...prev, item]);
     toast.success("Item adicionado aos favoritos", { icon: "❤️" });
   };
@@ -83,7 +89,7 @@ export default function Home() {
                 <InputText
                   icon={<CgSearch className="h-full w-full" />}
                   variant="filled"
-                  className="ease rounded-lg bg-white p-3 text-lg text-secondary_text outline-none transition duration-200 max-sm:w-full"
+                  className="rounded-lg bg-white p-3 text-lg text-secondary_text outline-none transition-all duration-500 hover:w-[420px] focus:w-[420px] max-sm:w-full"
                   placeholder="Pesquisar"
                   value={search}
                   onChange={(ev) => setSearch(ev.target.value)}
@@ -93,31 +99,34 @@ export default function Home() {
                   {search.length !== 0 &&
                     searchFilter?.map((product) => {
                       return (
-                        <motion.div
+                        <Link
+                          className="flex h-full w-full"
+                          href={`/product/${product.id}`}
                           key={product.id}
-                          initial={{ x: -20, opacity: 0 }}
-                          animate={{ x: 0, opacity: 1 }}
-                          transition={{ duration: 0.3 }}
-                          className="box relative flex w-full cursor-pointer items-center justify-between rounded border-b border-bg_secondary px-3 py-2 duration-200 hover:bg-bg_secondary"
                         >
-                          <div className="flex items-center gap-4">
-                            <img
-                              className="h-12 w-12 rounded"
-                              src={
-                                "https://droper-media.us-southeast-1.linodeobjects.com/15122023194634682.webp"
-                              }
-                              alt=""
-                            />
-                            <div className="flex flex-col gap-2">
-                              <Text className="font-semibold capitalize text-zinc-800">
-                                {product.nome}
-                              </Text>
+                          <motion.div
+                            initial={{ x: -20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="box relative flex h-full w-full cursor-pointer items-center justify-between rounded border-b border-bg_secondary px-3 py-2 duration-200 hover:bg-bg_secondary"
+                          >
+                            <div className="flex items-center gap-4">
+                              <img
+                                className="h-20 w-20 rounded"
+                                src={product.image}
+                                alt=""
+                              />
+                              <div className="flex flex-col gap-2">
+                                <Text className="font-semibold capitalize text-zinc-800">
+                                  {product.nome}
+                                </Text>
+                              </div>
                             </div>
-                          </div>
-                          <Text className="text-sm font-bold text-zinc-800">
-                            {formatPrice(product.valor)}
-                          </Text>
-                        </motion.div>
+                            <Text className="text-sm font-bold text-zinc-800">
+                              {formatPrice(product.valor)}
+                            </Text>
+                          </motion.div>
+                        </Link>
                       );
                     })}
                 </div>
@@ -141,10 +150,10 @@ export default function Home() {
               <Flame className="h-9 w-9 max-sm:h-7 max-sm:w-7" />
               Popular
             </Title>
-            <div className="arrow-right absolute right-2 top-1/2 z-20 flex -translate-y-1/2 cursor-pointer items-center justify-center">
+            <div className="arrow-right absolute right-2 top-1/2 z-20 flex -translate-y-1/2 cursor-pointer items-center justify-center max-sm:hidden">
               <ChevronRight className="h-10 w-10 rounded-full bg-black p-2" />
             </div>
-            <div className="arrow-left absolute left-2 top-1/2 z-20 flex -translate-y-1/2 cursor-pointer items-center justify-center">
+            <div className="arrow-left absolute left-2 top-1/2 z-20 flex -translate-y-1/2 cursor-pointer items-center justify-center max-sm:hidden">
               <ChevronLeft className="h-10 w-10 rounded-full bg-black p-2" />
             </div>
 
@@ -155,36 +164,55 @@ export default function Home() {
               }}
               cssMode={true}
               mousewheel={true}
+              slidesPerView={1}
+              spaceBetween={10}
               keyboard={true}
               modules={[Navigation, Pagination, Mousewheel, Keyboard]}
               breakpoints={{
-                1920: {
-                  slidesPerView: 6,
+                350: {
+                  slidesPerView: 2,
+                  spaceBetween: 200,
+                },
+                400: {
+                  slidesPerView: 2,
+                  spaceBetween: 170,
+                },
+                420: {
+                  slidesPerView: 2,
+                  spaceBetween: 140,
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 20,
+                },
+                1080: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+                1366: {
+                  slidesPerView: 4,
                   spaceBetween: 50,
                 },
                 1720: {
                   slidesPerView: 5,
                   spaceBetween: 30,
                 },
-                1366: {
-                  slidesPerView: 4,
-                  spaceBetween: 15,
-                },
-                1280: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-                955: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
+                1920: {
+                  slidesPerView: 6,
+                  spaceBetween: 50,
                 },
               }}
               className="w-full"
             >
               {getAllProducts?.map((item) => {
                 return (
-                  <SwiperSlide key={item.id}>
+                  <SwiperSlide style={{ width: "260px" }} key={item.id}>
                     <CardProduct
+                      key={item.id}
                       onClickSetFavorite={handleClickFavorite}
                       onClickAddCart={handleAddCart}
                       product={item}

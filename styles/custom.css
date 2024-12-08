@@ -20,6 +20,18 @@
   @apply bg-primary/30 text-zinc-200;
 }
 
+.btn-primary:disabled {
+  @apply bg-zinc-200 text-zinc-700
+}
+
+.btn-outlined:disabled, .btn-outlined:disabled:hover {
+  @apply border-zinc-400 text-zinc-600 bg-transparent
+}
+
+.btn-text:disabled {
+  @apply text-zinc-700
+}
+
 .input-primary {
   @apply rounded-lg bg-white p-1 text-base text-black outline-none transition-all;
 }

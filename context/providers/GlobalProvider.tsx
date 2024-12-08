@@ -14,6 +14,7 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
   const pathname = usePathname();
   const [favorites, setFavorites] = useState<IProductModel[]>([]);
   const [cart, setCart] = useState<IProductModel[]>([]);
+  const [totalPriceCart, setTotalPriceCart] = useState<number>(0);
 
   const [getAllProducts, setGetAllProducts] = useState<IProductModel[]>();
   const [isLoading, setIsLoading] = useState(false);
@@ -34,8 +35,6 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
     }
   }, [pathname]);
 
-
-
   return (
     <GlobalContext.Provider
       value={{
@@ -50,7 +49,9 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
         loginDialog,
         setLoginDialog,
         registerDialog,
-        setRegisterDialog
+        setRegisterDialog,
+        setTotalPriceCart,
+        totalPriceCart
       }}
     >
       {children}

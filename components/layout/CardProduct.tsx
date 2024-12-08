@@ -34,11 +34,11 @@ export default function CardProduct({
   onClickPay,
 }: CardProductProps) {
   return (
-    <Link className="h-full w-[270px]" href={`/product/${product.id}`}>
+    <Link href={`/product/${product.id}`}>
       <Animate
         className={clsx(
           className,
-          "relative flex h-full w-full flex-col gap-2 rounded-xl bg-white p-2 text-zinc-800",
+          "relative flex h-full w-[260px] flex-col gap-2 rounded-xl bg-white p-2 text-zinc-800",
         )}
       >
         <button

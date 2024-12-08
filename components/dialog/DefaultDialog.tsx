@@ -16,7 +16,7 @@ export default function DefaultDialog({
   showDialog,
 }: DialogProps) {
   const sizeClasses = {
-    xs: "w-[420px]",
+    xs: "w-[420px] max-sm:w-[90%]",
     sm: "w-[640px]",
     md: "w-[1024px]",
     lg: "w-[1280px]",

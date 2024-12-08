@@ -21,19 +21,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Providers>
-      <html lang="pt-br">
-        <body
-          className={`${inter.className} flex h-screen w-full gap-1 bg-zinc-100 antialiased max-lg:flex-col`}
-        >
+    <html lang="pt-br">
+      <body
+        className={`${inter.className} flex h-screen w-full gap-1 bg-zinc-100 antialiased max-lg:flex-col`}
+      >
+        <Providers>
           <Navbar />
           <Login />
           <RegisterUser />
           <Cart />
           <Toaster />
           {children}
-        </body>
-      </html>
-    </Providers>
+        </Providers>
+      </body>
+    </html>
   );
 }

@@ -13,11 +13,11 @@ export const routes: Route[] = [
     name: "Início",
     icon: React.createElement(House, { className: "h-7 w-7" }),
   },
-  {
-    path: "/explorer",
-    name: "Explorar",
-    icon: React.createElement(Compass, { className: "h-7 w-7" }),
-  },
+  // {
+  //   path: "/explorer",
+  //   name: "Explorar",
+  //   icon: React.createElement(Compass, { className: "h-7 w-7" }),
+  // },
   {
     path: "/favorite",
     name: "Favoritos",

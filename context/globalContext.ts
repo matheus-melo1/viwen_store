@@ -14,8 +14,10 @@ interface GlobalStateProps {
   setFavorites: React.Dispatch<React.SetStateAction<IProductModel[]>>;
   setLoginDialog: React.Dispatch<React.SetStateAction<boolean>>;
   loginDialog: boolean;
-  setRegisterDialog: React.Dispatch<React.SetStateAction<boolean>>; 
+  setRegisterDialog: React.Dispatch<React.SetStateAction<boolean>>;
   registerDialog: boolean;
+  totalPriceCart: number;
+  setTotalPriceCart: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const GlobalContext = createContext<GlobalStateProps | undefined>(undefined);

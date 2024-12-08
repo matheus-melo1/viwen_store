@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import AuthContext from "../auth";
 import { IPostResponseLogin } from "@/models/users/IUsersModel";
@@ -7,13 +9,19 @@ interface AuthProviderProps {
 }
 
 export default function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<IPostResponseLogin>();
+  const userStorage = localStorage.getItem("viwen:auth");
+  const [user, setUser] = useState<IPostResponseLogin | undefined>(
+    JSON.parse(userStorage ?? ""),
+  );
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setAuthenticated(prev => !prev);
+    localStorage.setItem("viwen:auth", JSON.stringify(user ?? "undefined"));
+    if (user?.id) {
+      setAuthenticated(true);
+      return;
     }
+    setAuthenticated(false);
   }, [user]);
 
   return (

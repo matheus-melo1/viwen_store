@@ -29,7 +29,7 @@ export default function Drawer({
         className={clsx(
           className,
           sizeClasses[size],
-          "ease-out absolute left-0 top-0 z-[99999] h-screen flex flex-col justify-between overflow-hidden rounded-lg bg-main_bg transition-all duration-500",
+          "absolute left-0 top-0 z-[99999] flex h-screen flex-col justify-between overflow-hidden rounded-lg bg-main_bg transition-all duration-500 ease-out max-sm:w-full",
           {
             "translate-x-0": showDrawer,
             "-translate-x-[900px]": !showDrawer,

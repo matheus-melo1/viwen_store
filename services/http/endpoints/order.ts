@@ -1,6 +1,10 @@
-import { IOrderCustomer } from "@/models/order/IOrderModel";
+import { IOrderCustomer, IResponseOrderCustomer } from "@/models/order/IOrderModel";
 import http from "@/services/axios";
 
-export async function createOrderUser(orderData: IOrderCustomer) {
+export async function HttpCreateOrderUser(orderData: IOrderCustomer) {
   return await http.post<IOrderCustomer>("/pedidos", orderData);
+}
+
+export async function HttpGetOrderUser(id: number) {
+  return await http.get<IResponseOrderCustomer>(`/pedidos/${id}`)
 }
