@@ -10,10 +10,10 @@ export async function postOrderCustomer(orderData: IOrderCustomer) {
   }
 }
 
-export async function getOrderCustomer(id: number) {
+export async function getOrderCustomer() {
   try {
-    const response = await HttpGetOrderUser(id);
-    return response;
+    const response = await HttpGetOrderUser();
+    return response.data;
   } catch (err) {
     console.log(err);
   }

@@ -5,6 +5,6 @@ export async function HttpCreateOrderUser(orderData: IOrderCustomer) {
   return await http.post<IOrderCustomer>("/pedidos", orderData);
 }
 
-export async function HttpGetOrderUser(id: number) {
-  return await http.get<IResponseOrderCustomer>(`/pedidos/${id}`)
+export async function HttpGetOrderUser() {
+  return await http.get<IResponseOrderCustomer[]>(`/pedidos`)
 }

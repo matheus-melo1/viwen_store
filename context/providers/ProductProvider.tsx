@@ -8,18 +8,20 @@ import { postOrderCustomer } from "@/services/order/orderRequests";
 import useGlobalContext from "@/hooks/useGlobalContext";
 import { IOrderCustomer } from "@/models/order/IOrderModel";
 import useAuth from "@/hooks/useAuth";
+import toast from "react-hot-toast";
 
 interface AppProviderProps {
   children: React.ReactNode;
 }
 
 export default function ProductProvider({ children }: AppProviderProps) {
-  const { cart, totalPriceCart } = useGlobalContext();
+  const { cart, totalPriceCart, setOpenCart } = useGlobalContext();
   const { user } = useAuth();
 
   const [id, setId] = useState("");
   const [idOrder, setIdOrder] = useState<number>();
   const [product, setProduct] = useState<IProductModel>();
+  const [isLoadingPay, setIsLoadingPay] = useState(false);
 
   const [orderCustomer, setOrderCustomer] = useState<IOrderCustomer>();
 
@@ -48,7 +50,17 @@ export default function ProductProvider({ children }: AppProviderProps) {
   /// create order customer fdp
 
   const handleCreateOrder = async () => {
-    await postOrderCustomer(orderCustomer as IOrderCustomer);
+    setIsLoadingPay(true);
+    await postOrderCustomer(orderCustomer as IOrderCustomer)
+      .then(() => {
+        setIsLoadingPay(false);
+        setOpenCart((prev) => !prev);
+        toast.success("Pedido realizado com sucesso");
+      })
+      .catch(() => {
+        setIsLoadingPay(false);
+        toast.error("Erro ao efetuar pedido");
+      });
   };
 
   return (
@@ -59,6 +71,7 @@ export default function ProductProvider({ children }: AppProviderProps) {
         idOrder,
         setIdOrder,
         handleCreateOrder,
+        isLoadingPay,
       }}
     >
       {children}

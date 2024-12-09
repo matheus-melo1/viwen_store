@@ -1,21 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import MyOrder from "./components/MyOrder";
 import MyProfile from "./components/MyProfile";
 import clsx from "clsx";
 import useAuth from "@/hooks/useAuth";
-import { getOrderCustomer } from "@/services/order/orderRequests";
-import { useAppContext } from "@/hooks/useAppContext";
 
 export default function Profile() {
-  const { user } = useAuth();
-  const { idOrder } = useAppContext();
+  const { user, orders } = useAuth();
   const [tab, setTab] = useState(false);
-
-  useEffect(() => {
-    if (user?.id) getOrderCustomer(idOrder ?? 0);
-  }, [user, idOrder]);
 
   return (
     <main className="relative flex h-screen w-full flex-col items-start p-3 max-sm:p-2">
@@ -44,7 +37,7 @@ export default function Profile() {
           </button>
         </div>
         {!tab && <MyProfile user={user} />}
-        {tab && <MyOrder />}
+        {tab && <MyOrder orders={orders} />}
       </section>
     </main>
   );

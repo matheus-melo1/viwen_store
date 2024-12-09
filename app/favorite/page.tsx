@@ -9,7 +9,7 @@ import { MouseEvent } from "react";
 import toast from "react-hot-toast";
 
 export default function FavoritePage() {
-  const { favorites, setFavorites, cart, setCart } = useGlobalContext();
+  const { favorites, setFavorites, cart, setCart, setOpenCart } = useGlobalContext();
 
   const handleClickFavorite = (item: IProductModel) => {
     const prodContain = favorites.filter((prod) => prod.id === item.id);
@@ -42,9 +42,12 @@ export default function FavoritePage() {
 
   const handleClickPay = (
     ev: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    item: IProductModel,
   ) => {
     ev.stopPropagation();
     ev.preventDefault();
+    handleAddCart(item);
+    setOpenCart((prev) => !prev);
   };
 
   return (

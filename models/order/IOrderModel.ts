@@ -14,7 +14,7 @@ export interface IOrderCustomer {
 export interface IResponseOrderCustomer {
   id: number;
   usuarioId: number;
-  produto: IProductsOrder[];
+  produtos: IProductsOrder[];
   quantidade: number;
   valorPedido: number;
   status: string;

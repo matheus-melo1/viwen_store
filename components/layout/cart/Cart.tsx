@@ -33,7 +33,7 @@ export default function Cart() {
     setTotalPriceCart,
   } = useGlobalContext();
 
-  const { handleCreateOrder } = useAppContext();
+  const { handleCreateOrder, isLoadingPay } = useAppContext();
   const { authenticated } = useAuth();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -48,6 +48,7 @@ export default function Cart() {
     Roxo: "bg-purple-500",
     Preto: "bg-zinc-800",
     Branco: "bg-white",
+    Branca: "bg-white",
     Cinza: "bg-zinc-500",
   };
 
@@ -145,7 +146,12 @@ export default function Cart() {
                     </Title>
                     <div className="flex flex-col items-start gap-2">
                       <div className="flex h-full items-center gap-2 rounded-full bg-white px-2 py-1">
-                        <div className={clsx(colors[item.cor], "h-5 w-5 rounded-full border border-zinc-400")}></div>
+                        <div
+                          className={clsx(
+                            colors[item.cor],
+                            "h-5 w-5 rounded-full border border-zinc-400",
+                          )}
+                        ></div>
                         <Text className="text-zinc-800">{item.cor}</Text>
                       </div>
                       <Increment
@@ -185,6 +191,7 @@ export default function Cart() {
         </div>
         <Button
           onClick={handleCreateOrder}
+          loading={isLoadingPay}
           disabled={cart.length === 0 || !authenticated}
           variant="filled"
         >

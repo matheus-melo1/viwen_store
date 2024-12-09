@@ -15,6 +15,7 @@ interface GlobalStateProps {
   setLoginDialog: React.Dispatch<React.SetStateAction<boolean>>;
   loginDialog: boolean;
   setRegisterDialog: React.Dispatch<React.SetStateAction<boolean>>;
+  handleGetAllProducts: () => void;
   registerDialog: boolean;
   totalPriceCart: number;
   setTotalPriceCart: React.Dispatch<React.SetStateAction<number>>;

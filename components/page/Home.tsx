@@ -26,8 +26,14 @@ import Title from "../common/text/title";
 import Link from "next/link";
 
 export default function Home() {
-  const { getAllProducts, favorites, setFavorites, cart, setCart } =
-    useGlobalContext();
+  const {
+    getAllProducts,
+    favorites,
+    setFavorites,
+    cart,
+    setCart,
+    setOpenCart,
+  } = useGlobalContext();
 
   const [search, setSearch] = React.useState("");
 
@@ -70,9 +76,12 @@ export default function Home() {
 
   const handleClickPay = (
     ev: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    item: IProductModel,
   ) => {
     ev.stopPropagation();
     ev.preventDefault();
+    handleAddCart(item);
+    setOpenCart((prev) => !prev);
   };
 
   return (

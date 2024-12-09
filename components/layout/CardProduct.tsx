@@ -22,6 +22,7 @@ interface CardProductProps {
   verifyFavoriteCard?: (id: string) => boolean;
   onClickPay?: (
     ev: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    item: IProductModel,
   ) => void;
 }
 
@@ -34,7 +35,7 @@ export default function CardProduct({
   onClickPay,
 }: CardProductProps) {
   return (
-    <Link href={`/product/${product.id}`}>
+    <Link className="h-full" href={`/product/${product.id}`}>
       <Animate
         className={clsx(
           className,
@@ -80,7 +81,10 @@ export default function CardProduct({
           <span className="rounded-full bg-black px-2 text-sm uppercase text-white">
             {product?.marca}
           </span>
-          <Title size="1" className="text-center text-lg capitalize">
+          <Title
+            size="1"
+            className="w-full truncate text-center text-lg capitalize"
+          >
             {product?.nome}
           </Title>
         </div>
@@ -104,7 +108,7 @@ export default function CardProduct({
             <FaCartPlus className="h-5 w-5" />
           </button>
           <button
-            onClick={(ev) => onClickPay?.(ev)}
+            onClick={(ev) => onClickPay?.(ev, product)}
             className="ease flex h-full w-full items-center justify-center gap-[6px] rounded-full bg-white px-1 py-1 duration-200 hover:bg-black hover:text-white"
           >
             <FaMoneyBill className="h-5 w-5" />

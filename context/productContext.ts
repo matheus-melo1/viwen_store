@@ -8,6 +8,7 @@ interface ProductContextProps {
   setIdOrder: React.Dispatch<React.SetStateAction<number | undefined>>;
   idOrder: number | undefined;
   handleCreateOrder: () => Promise<void>;
+  isLoadingPay: boolean;
 }
 
 export const ProductContext = createContext<ProductContextProps | undefined>(

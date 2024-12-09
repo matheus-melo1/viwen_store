@@ -24,8 +24,8 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
   const [loginDialog, setLoginDialog] = useState(false);
   const [registerDialog, setRegisterDialog] = useState(false);
 
-  useEffect(() => {
-    if (pathname === "/") {
+  const handleGetAllProducts = () => {
+    if (pathname === "/" || pathname === "/profile") {
       setIsLoading(true);
       const fetch = async () => {
         await listProducts().then((resp) => setGetAllProducts(resp));
@@ -33,6 +33,10 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
       };
       fetch();
     }
+  };
+
+  useEffect(() => {
+    handleGetAllProducts();
   }, [pathname]);
 
   return (
@@ -49,9 +53,10 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
         loginDialog,
         setLoginDialog,
         registerDialog,
+        handleGetAllProducts,
         setRegisterDialog,
         setTotalPriceCart,
-        totalPriceCart
+        totalPriceCart,
       }}
     >
       {children}
