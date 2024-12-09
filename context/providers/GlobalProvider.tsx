@@ -13,13 +13,19 @@ interface GlobalProviderProps {
 export default function GlobalProvider({ children }: GlobalProviderProps) {
   const pathname = usePathname();
   const [favorites, setFavorites] = useState<IProductModel[]>([]);
-  const [cart, setCart] = useState<IProductModel[]>();
+  const [cart, setCart] = useState<IProductModel[]>([]);
+  const [totalPriceCart, setTotalPriceCart] = useState<number>(0);
 
   const [getAllProducts, setGetAllProducts] = useState<IProductModel[]>();
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (pathname === "/") {
+  const [openCart, setOpenCart] = useState(false);
+
+  const [loginDialog, setLoginDialog] = useState(false);
+  const [registerDialog, setRegisterDialog] = useState(false);
+
+  const handleGetAllProducts = () => {
+    if (pathname === "/" || pathname === "/profile") {
       setIsLoading(true);
       const fetch = async () => {
         await listProducts().then((resp) => setGetAllProducts(resp));
@@ -27,11 +33,31 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
       };
       fetch();
     }
+  };
+
+  useEffect(() => {
+    handleGetAllProducts();
   }, [pathname]);
 
   return (
     <GlobalContext.Provider
-      value={{ cart, setCart, getAllProducts, isLoading, favorites, setFavorites }}
+      value={{
+        cart,
+        setCart,
+        openCart,
+        setOpenCart,
+        getAllProducts,
+        isLoading,
+        favorites,
+        setFavorites,
+        loginDialog,
+        setLoginDialog,
+        registerDialog,
+        handleGetAllProducts,
+        setRegisterDialog,
+        setTotalPriceCart,
+        totalPriceCart,
+      }}
     >
       {children}
     </GlobalContext.Provider>

@@ -10,6 +10,9 @@ import {
 } from "react-icons/fa6";
 import Title from "../common/text/title";
 import clsx from "clsx";
+import { MouseEvent } from "react";
+import formatPrice from "@/utils/formatPrice";
+import Animate from "../common/Animate";
 
 interface CardProductProps {
   className?: string;
@@ -17,6 +20,10 @@ interface CardProductProps {
   onClickSetFavorite?: (item: IProductModel) => void;
   onClickAddCart?: (item: IProductModel) => void;
   verifyFavoriteCard?: (id: string) => boolean;
+  onClickPay?: (
+    ev: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    item: IProductModel,
+  ) => void;
 }
 
 export default function CardProduct({
@@ -25,11 +32,15 @@ export default function CardProduct({
   onClickSetFavorite,
   onClickAddCart,
   verifyFavoriteCard,
+  onClickPay,
 }: CardProductProps) {
   return (
-    <Link className="h-full min-w-[270px]" href={`/product/${product.id}`}>
-      <div
-        className={`${className} relative flex h-full min-w-full flex-col gap-2 rounded-xl bg-white p-2 text-zinc-800`}
+    <Link className="h-full" href={`/product/${product.id}`}>
+      <Animate
+        className={clsx(
+          className,
+          "relative flex h-full w-[260px] flex-col gap-2 rounded-xl bg-white p-2 text-zinc-800",
+        )}
       >
         <button
           onClick={(ev) => {
@@ -56,10 +67,13 @@ export default function CardProduct({
           )}
         </button>
         {/* <Image width={300} height={300} src="/images/banner_top.png" alt="" /> */}
-        <div className="h-[250px] min-w-[250px]">
+        <div className="h-[250px] min-w-full bg-main_bg max-2xl:min-w-[250px]">
           <img
             className="h-full w-full rounded-xl object-contain"
-            src="https://droper-media.us-southeast-1.linodeobjects.com/15122023194634682.webp"
+            src={
+              product?.image ??
+              "https://droper-media.us-southeast-1.linodeobjects.com/15122023194634682.webp"
+            }
             alt=""
           />
         </div>
@@ -67,11 +81,16 @@ export default function CardProduct({
           <span className="rounded-full bg-black px-2 text-sm uppercase text-white">
             {product?.marca}
           </span>
-          <Title size="1" className="text-lg capitalize">{product?.nome}</Title>
+          <Title
+            size="1"
+            className="w-full truncate text-center text-lg capitalize"
+          >
+            {product?.nome}
+          </Title>
         </div>
-        <div className="flex w-full flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-1">
           <Title size="1" className="text-2xl font-bold text-[#009393]">
-            R$ {product?.valor}
+            {formatPrice(product?.valor)}
           </Title>
           <span className="flex items-center justify-center gap-1 text-sm">
             <FaCreditCard className="h-4 w-4 text-zinc-700" /> 6x de R$ 9,90
@@ -88,12 +107,15 @@ export default function CardProduct({
           >
             <FaCartPlus className="h-5 w-5" />
           </button>
-          <button className="ease flex h-full w-full items-center justify-center gap-[6px] rounded-full bg-white px-1 py-1 duration-200 hover:bg-black hover:text-white">
+          <button
+            onClick={(ev) => onClickPay?.(ev, product)}
+            className="ease flex h-full w-full items-center justify-center gap-[6px] rounded-full bg-white px-1 py-1 duration-200 hover:bg-black hover:text-white"
+          >
             <FaMoneyBill className="h-5 w-5" />
             Comprar
           </button>
         </div>
-      </div>
+      </Animate>
     </Link>
   );
 }

@@ -10,11 +10,13 @@ import clsx from "clsx";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 interface NavOptionProps {
-  href: string;
+  href?: string;
   children: React.ReactNode;
   icon?: ReactNode;
   className?: string;
   cartValid?: boolean;
+  valueCart?: number;
+  onClick?: (ev: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
 export default function NavOption({
@@ -23,17 +25,20 @@ export default function NavOption({
   icon,
   className,
   cartValid,
+  valueCart,
+  onClick,
 }: NavOptionProps) {
   const pathname = usePathname();
 
   return (
     <Link
+      onClick={onClick}
       className={clsx(
         className,
         href === pathname && "bg-primary_light/20",
         `${inter.className} ease flex w-full items-center justify-start gap-5 rounded-lg p-4 text-lg font-semibold text-zinc-600 duration-150 hover:bg-zinc-100`,
       )}
-      href={href}
+      href={href ?? "/"}
     >
       {cartValid ? (
         <>
@@ -42,7 +47,7 @@ export default function NavOption({
             {children}
           </div>
           <div className="flex h-6 w-7 items-center justify-center rounded-full bg-primary text-white">
-            <Text className="text-sm">0</Text>
+            <Text className="text-sm text-white">{valueCart}</Text>
           </div>
         </>
       ) : (
