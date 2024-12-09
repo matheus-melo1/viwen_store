@@ -18,7 +18,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   const [authenticated, setAuthenticated] = useState(false);
   const [orders, setOrders] = useState<IResponseOrderCustomer[]>();
 
-  const handleGetCustomer = async () => {
+  const ListGetCustomer = async () => {
     await getOrderCustomer().then((resp) => {
       const ordersFilt = resp?.filter((item) => item?.usuarioId === user?.id);
       setOrders(ordersFilt);
@@ -28,7 +28,6 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     localStorage.setItem("viwen:auth", JSON.stringify(user ?? "undefined"));
     if (user?.id) {
-      handleGetCustomer();
       setAuthenticated(true);
       return;
     }
@@ -37,7 +36,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
   }, [user, setOrders]);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, authenticated, orders }}>
+    <AuthContext.Provider value={{ user, ListGetCustomer, setUser, authenticated, orders }}>
       {children}
     </AuthContext.Provider>
   );
