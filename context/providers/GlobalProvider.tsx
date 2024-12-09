@@ -25,7 +25,7 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
   const [registerDialog, setRegisterDialog] = useState(false);
 
   const handleGetAllProducts = () => {
-    if (pathname === "/" || pathname === "/profile") {
+    if (pathname === "/") {
       setIsLoading(true);
       const fetch = async () => {
         await listProducts().then((resp) => setGetAllProducts(resp));
@@ -37,6 +37,7 @@ export default function GlobalProvider({ children }: GlobalProviderProps) {
 
   useEffect(() => {
     handleGetAllProducts();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (

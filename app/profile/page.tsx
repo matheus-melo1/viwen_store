@@ -1,14 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyOrder from "./components/MyOrder";
 import MyProfile from "./components/MyProfile";
 import clsx from "clsx";
 import useAuth from "@/hooks/useAuth";
 
 export default function Profile() {
-  const { user, orders } = useAuth();
+  const { user, orders, ListGetCustomer } = useAuth();
   const [tab, setTab] = useState(false);
+
+  useEffect(() => {
+    ListGetCustomer();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <main className="relative flex h-screen w-full flex-col items-start p-3 max-sm:p-2">
